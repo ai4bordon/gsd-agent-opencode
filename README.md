@@ -254,8 +254,8 @@ Useful:
 
 ## Documentation
 
-- Full guide (RU): [Open in browser](https://htmlpreview.github.io/?https://raw.githubusercontent.com/ai4bordon/gsd-agent-opencode/main/docs/GSD_AgentSystemGuide.html)
-- Full guide (EN): [Open in browser](https://htmlpreview.github.io/?https://raw.githubusercontent.com/ai4bordon/gsd-agent-opencode/main/docs/GSD_AgentSystemGuide_EN.html)
+- Full guide (RU): [Open in browser](https://raw.githack.com/ai4bordon/gsd-agent-opencode/main/docs/GSD_AgentSystemGuide.html)
+- Full guide (EN): [Open in browser](https://raw.githack.com/ai4bordon/gsd-agent-opencode/main/docs/GSD_AgentSystemGuide_EN.html)
 
 ## Acknowledgements
 

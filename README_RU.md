@@ -251,8 +251,8 @@ gsd-agent-opencode uninstall --global
 
 ## Документация
 
-- Полный гайд (RU): [Открыть в браузере](https://htmlpreview.github.io/?https://raw.githubusercontent.com/ai4bordon/gsd-agent-opencode/main/docs/GSD_AgentSystemGuide.html)
-- Full guide (EN): [Open in browser](https://htmlpreview.github.io/?https://raw.githubusercontent.com/ai4bordon/gsd-agent-opencode/main/docs/GSD_AgentSystemGuide_EN.html)
+- Полный гайд (RU): [Открыть в браузере](https://raw.githack.com/ai4bordon/gsd-agent-opencode/main/docs/GSD_AgentSystemGuide.html)
+- Full guide (EN): [Open in browser](https://raw.githack.com/ai4bordon/gsd-agent-opencode/main/docs/GSD_AgentSystemGuide_EN.html)
 
 ## Благодарности
 
