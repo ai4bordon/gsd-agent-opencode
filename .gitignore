@@ -1,0 +1,8 @@
+node_modules/
+.opencode/
+.tmp-opencode/
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store

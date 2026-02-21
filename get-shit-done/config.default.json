@@ -1,0 +1,13 @@
+{
+  "ralf_lite": {
+    "enabled": true,
+    "max_iterations": 3,
+    "error_fingerprint_repeats": 2,
+    "no_progress_repeats": 2,
+    "apply_to": {
+      "auto_tasks": true,
+      "autonomous_plans": true,
+      "tdd_tasks": false
+    }
+  }
+}

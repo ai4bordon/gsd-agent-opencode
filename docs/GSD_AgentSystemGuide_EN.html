@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GSD (Get Shit Done) - Complete Agent System Guide</title>
+  <style>
+    :root {
+      --bg: #f3f0ea;
+      --paper: #fffdf9;
+      --sidebar: #123454;
+      --sidebar-2: #1f4a72;
+      --text: #1f2933;
+      --muted: #5b6876;
+      --line: #dde4ec;
+      --accent: #d36537;
+      --code-bg: #eef2f7;
+      --shadow: 0 10px 28px rgba(16, 35, 60, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: "Segoe UI", "Noto Sans", "Arial", sans-serif;
+      line-height: 1.62;
+      background:
+        radial-gradient(circle at 12% 8%, #f8e3d6 0%, transparent 32%),
+        radial-gradient(circle at 90% 86%, #d9e8f8 0%, transparent 34%),
+        var(--bg);
+    }
+
+    .layout { display: flex; min-height: 100vh; }
+
+    .sidebar {
+      width: 320px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 1.2rem 1rem 1.4rem;
+      background: linear-gradient(170deg, var(--sidebar) 0%, #1a446d 58%, var(--sidebar-2) 100%);
+      color: #e8f1fb;
+      box-shadow: var(--shadow);
+      z-index: 10;
+    }
+
+    .sidebar h2 {
+      margin: 0 0 0.9rem;
+      font-size: 1rem;
+      color: #f4f9ff;
+    }
+
+    .toc { list-style: none; margin: 0; padding: 0; }
+    .toc li { margin: 0.12rem 0; }
+    .toc a {
+      display: block;
+      text-decoration: none;
+      color: #d8e8fb;
+      padding: 0.34rem 0.48rem;
+      border-radius: 8px;
+      font-size: 0.91rem;
+    }
+    .toc a:hover { background: rgba(255, 255, 255, 0.12); color: #fff; }
+    .l1 a { font-weight: 700; }
+    .l2 a { padding-left: 1rem; font-weight: 600; }
+    .l3 a { padding-left: 1.5rem; font-size: 0.87rem; color: #c6dbf2; }
+
+    .content {
+      margin-left: 320px;
+      width: calc(100% - 320px);
+      padding: 2.1rem 1.8rem 2.5rem;
+    }
+
+    main {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 2rem 2rem 2.2rem;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    h1, h2, h3 { color: #10253b; line-height: 1.3; scroll-margin-top: 0.8rem; }
+    h1 { margin: 0 0 0.8rem; font-size: 1.95rem; border-bottom: 1px solid var(--line); padding-bottom: 0.7rem; }
+    h2 { margin: 2rem 0 0.6rem; font-size: 1.4rem; border-bottom: 1px solid #e8edf4; padding-bottom: 0.35rem; }
+    h3 { margin: 1.35rem 0 0.45rem; font-size: 1.06rem; }
+    p { margin: 0.6rem 0; }
+    ul, ol { margin: 0.45rem 0 0.85rem 1.2rem; }
+    li { margin: 0.24rem 0; }
+
+    code {
+      font-family: "Cascadia Code", "Consolas", monospace;
+      background: var(--code-bg);
+      border: 1px solid #d8e2ef;
+      border-radius: 6px;
+      padding: 0.08rem 0.34rem;
+      color: #16385a;
+      font-size: 0.88em;
+    }
+
+    pre {
+      margin: 0.8rem 0;
+      padding: 0.85rem 0.95rem;
+      border-radius: 10px;
+      overflow: auto;
+      background: #111b28;
+      color: #eaf2fb;
+      font-size: 0.89rem;
+    }
+
+    pre code {
+      background: transparent;
+      border: 0;
+      color: inherit;
+      padding: 0;
+    }
+
+    .table-wrap {
+      margin: 0.9rem 0 1.2rem;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    table { border-collapse: collapse; width: 100%; min-width: 820px; }
+    th, td {
+      border-bottom: 1px solid #e8edf5;
+      padding: 0.52rem 0.6rem;
+      vertical-align: top;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+    th { background: #f3f8fd; color: #123454; font-weight: 700; }
+    tr:last-child td { border-bottom: 0; }
+
+    blockquote {
+      margin: 0.9rem 0;
+      border-left: 4px solid var(--accent);
+      background: #fff7f2;
+      padding: 0.55rem 0.9rem;
+      border-radius: 6px;
+    }
+
+    .menu-btn {
+      display: none;
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 20;
+      border: 0;
+      border-radius: 10px;
+      background: #1e4a74;
+      color: #fff;
+      padding: 0.5rem 0.68rem;
+      box-shadow: var(--shadow);
+    }
+
+    @media (max-width: 980px) {
+      .menu-btn { display: inline-block; }
+      .sidebar {
+        width: min(88vw, 360px);
+        transform: translateX(-105%);
+        transition: transform 0.2s ease;
+      }
+      body.menu-open .sidebar { transform: translateX(0); }
+      .content {
+        margin-left: 0;
+        width: 100%;
+        padding: 0.95rem 0.72rem 2rem;
+      }
+      main { padding: 1.2rem 1rem 1.5rem; }
+      h1 { margin-top: 1.9rem; font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <button class="menu-btn" id="menu-btn" type="button">Menu</button>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <h2>Contents</h2>
+      <ul class="toc">
+        <li class="l1"><a href="#title">GSD: complete guide</a></li>
+        <li class="l2"><a href="#quick-map">1. What this is and how to read it</a></li>
+        <li class="l2"><a href="#architecture">2. System architecture</a></li>
+        <li class="l2"><a href="#commands">3. All commands</a></li>
+        <li class="l2"><a href="#agents">4. All agents</a></li>
+        <li class="l3"><a href="#gsd-agent-role">4.1 Gsd-agent role</a></li>
+        <li class="l2"><a href="#auto-chains">5. Automatic chains</a></li>
+        <li class="l3"><a href="#cycles-ralf">5.1 Built-in loops and RALF Lite</a></li>
+        <li class="l2"><a href="#pipelines">6. Pipeline variants</a></li>
+        <li class="l2"><a href="#user-vs-auto">7. User-triggered vs automatic</a></li>
+        <li class="l2"><a href="#artifacts">8. Artifacts and state files</a></li>
+        <li class="l2"><a href="#edge-cases">9. Nuances and edge cases</a></li>
+        <li class="l2"><a href="#sources">10. Sources</a></li>
+      </ul>
+    </aside>
+    <div class="content">
+      <main>
+        <h1 id="title">GSD (Get Shit Done): complete guide to the agent system</h1>
+        <blockquote>
+          This guide describes full GSD operation in OpenCode: all slash commands, all agents, all key pipeline scenarios, automatic subagent invocations, and artifacts in <code>.planning/</code>.
+        </blockquote>
+
+        <h2 id="quick-map">1. What this is and how to read it</h2>
+        <p>GSD is a command-first agentic development system. Core principle: the user runs <code>/gsd-*</code>, and the command-level orchestrator launches specialized agents via <code>Task(subagent_type=...)</code> where needed.</p>
+        <ul>
+          <li>If you need a fast start: begin with <strong>Pipeline variants</strong>.</li>
+          <li>If you need a full reference: use <strong>All commands</strong> and <strong>All agents</strong>.</li>
+          <li>If you need internals: see <strong>Automatic chains</strong> and <strong>Artifacts</strong>.</li>
+        </ul>
+
+        <h2 id="architecture">2. System architecture</h2>
+        <pre><code>User
+  -> /gsd-* command (commands/gsd/*.md)
+  -> step orchestration + .planning read/write
+  -> subagent execution (agents/*.md) when needed
+  -> artifact updates (PLAN/SUMMARY/VERIFICATION/UAT/STATE/ROADMAP)
+  -> next-command guidance</code></pre>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Layer</th>
+                <th>Purpose</th>
+                <th>Where to look</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Slash commands</td>
+                <td>Entry points, routing, agent and workflow invocation</td>
+                <td><code>commands/gsd/</code></td>
+              </tr>
+              <tr>
+                <td>Agents</td>
+                <td>Specialized roles (planner/executor/verifier/debugger, etc.)</td>
+                <td><code>agents/</code></td>
+              </tr>
+              <tr>
+                <td>Workflow rules</td>
+                <td>Execution, verification, debug, resume protocols</td>
+                <td><code>get-shit-done/workflows/</code></td>
+              </tr>
+              <tr>
+                <td>References</td>
+                <td>Checkpoints, RALF Lite, model profiles, git and config policies</td>
+                <td><code>get-shit-done/references/</code></td>
+              </tr>
+              <tr>
+                <td>Project state</td>
+                <td>Source of truth for continuity between sessions</td>
+                <td><code>.planning/</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="commands">3. All /gsd-* commands</h2>
+        <p>Full command map below: what the user triggers, what subagents are invoked automatically, and what files are used.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Command</th>
+                <th>Arguments</th>
+                <th>Purpose</th>
+                <th>Auto-invokes</th>
+                <th>Key artifacts</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>/gsd-help</code></td><td>-</td><td>Static command reference.</td><td>No</td><td>No file changes</td></tr>
+              <tr><td><code>/gsd-new-project</code></td><td>-</td><td>Project bootstrap: questioning -> optional research -> requirements -> roadmap.</td><td><code>gsd-project-researcher</code> x4, <code>gsd-research-synthesizer</code>, <code>gsd-roadmapper</code></td><td><code>.planning/PROJECT.md</code>, <code>.planning/REQUIREMENTS.md</code>, <code>.planning/ROADMAP.md</code>, <code>.planning/STATE.md</code>, <code>.planning/config.json</code>, <code>opencode.json</code></td></tr>
+              <tr><td><code>/gsd-map-codebase</code></td><td>[area]</td><td>Map an existing codebase (brownfield).</td><td><code>gsd-codebase-mapper</code> x4</td><td><code>.planning/codebase/*.md</code></td></tr>
+              <tr><td><code>/gsd-progress</code></td><td>-</td><td>Shows actual status and selects next route.</td><td>No</td><td>Reads <code>.planning/STATE.md</code>, <code>.planning/ROADMAP.md</code>, summaries/uat/todos/debug</td></tr>
+              <tr><td><code>/gsd-discuss-phase</code></td><td><code>&lt;N&gt;</code></td><td>Captures phase context before planning.</td><td>No</td><td><code>.planning/phases/*/*-CONTEXT.md</code></td></tr>
+              <tr><td><code>/gsd-list-phase-assumptions</code></td><td>[phase]</td><td>Shows system assumptions before planning.</td><td>No</td><td>Read-only</td></tr>
+              <tr><td><code>/gsd-research-phase</code></td><td>[phase]</td><td>Standalone phase research without mandatory planning.</td><td><code>gsd-phase-researcher</code></td><td><code>.planning/phases/*/*-RESEARCH.md</code></td></tr>
+              <tr><td><code>/gsd-plan-phase</code></td><td>[phase] [<code>--research</code>] [<code>--skip-research</code>] [<code>--gaps</code>] [<code>--skip-verify</code>]</td><td>Creates executable phase plans + plan quality verification loop.</td><td><code>gsd-phase-researcher</code>, <code>gsd-planner</code>, <code>gsd-plan-checker</code></td><td><code>.planning/phases/*/*-PLAN.md</code>, optional <code>*-RESEARCH.md</code>, roadmap updates</td></tr>
+              <tr><td><code>/gsd-execute-phase</code></td><td><code>&lt;N&gt;</code> [<code>--gaps-only</code>]</td><td>Executes plans in waves, then verifies phase goal.</td><td><code>gsd-executor</code>, <code>gsd-verifier</code></td><td><code>*-SUMMARY.md</code>, <code>*-VERIFICATION.md</code>, updates to <code>STATE/ROADMAP/REQUIREMENTS</code></td></tr>
+              <tr><td><code>/gsd-verify-work</code></td><td>[phase]</td><td>Conversational UAT + automatic gap-plan generation when issues are found.</td><td>debug diagnosis, <code>gsd-planner</code> (gap mode), <code>gsd-plan-checker</code></td><td><code>*-UAT.md</code>, gap <code>*-PLAN.md</code></td></tr>
+              <tr><td><code>/gsd-quick</code></td><td>-</td><td>Short cycle for small tasks without full pipeline overhead.</td><td><code>gsd-planner</code>, <code>gsd-executor</code></td><td><code>.planning/quick/*/PLAN.md</code>, <code>.planning/quick/*/SUMMARY.md</code>, <code>STATE.md</code></td></tr>
+              <tr><td><code>/gsd-debug</code></td><td>[issue]</td><td>Systematic scientific debugging with session persistence.</td><td><code>gsd-debugger</code></td><td><code>.planning/debug/*.md</code>, archive <code>.planning/debug/resolved/</code></td></tr>
+              <tr><td><code>/gsd-add-todo</code></td><td>[description]</td><td>Saves an idea/task into pending todo.</td><td>No</td><td><code>.planning/todos/pending/*.md</code>, <code>STATE.md</code></td></tr>
+              <tr><td><code>/gsd-check-todos</code></td><td>[area]</td><td>Shows pending todos and moves selected items to done.</td><td>No</td><td><code>.planning/todos/done/*.md</code>, <code>STATE.md</code></td></tr>
+              <tr><td><code>/gsd-add-phase</code></td><td><code>&lt;description&gt;</code></td><td>Adds a new phase at the end of the milestone.</td><td>No</td><td>Updates <code>ROADMAP.md</code>, phase dirs, <code>STATE.md</code></td></tr>
+              <tr><td><code>/gsd-insert-phase</code></td><td><code>&lt;after&gt; &lt;description&gt;</code></td><td>Inserts an urgent decimal phase (for example 7.1).</td><td>No</td><td>Updates <code>ROADMAP.md</code>, phase dirs, <code>STATE.md</code></td></tr>
+              <tr><td><code>/gsd-remove-phase</code></td><td><code>&lt;phase-number&gt;</code></td><td>Removes a future phase and renumbers following phases.</td><td>No</td><td>Changes <code>.planning/phases/*</code>, <code>ROADMAP.md</code>, <code>STATE.md</code></td></tr>
+              <tr><td><code>/gsd-audit-milestone</code></td><td>[version]</td><td>Milestone audit of requirements, integrations, and e2e flows.</td><td><code>gsd-integration-checker</code></td><td><code>.planning/v{version}-MILESTONE-AUDIT.md</code></td></tr>
+              <tr><td><code>/gsd-plan-milestone-gaps</code></td><td>-</td><td>Transforms audit gaps into new closure phases.</td><td>Gap planning orchestrator</td><td>Updates <code>ROADMAP.md</code>, creates new phase folders</td></tr>
+              <tr><td><code>/gsd-complete-milestone</code></td><td><code>&lt;version&gt;</code></td><td>Archives milestone and prepares the next one.</td><td>No</td><td><code>.planning/milestones/*</code>, updates <code>ROADMAP/PROJECT/STATE</code></td></tr>
+              <tr><td><code>/gsd-new-milestone</code></td><td>[name]</td><td>Initializes next milestone similar to new-project.</td><td><code>gsd-project-researcher</code> x4, <code>gsd-research-synthesizer</code>, <code>gsd-roadmapper</code></td><td><code>PROJECT/REQUIREMENTS/ROADMAP/STATE</code>, <code>.planning/research/*</code></td></tr>
+              <tr><td><code>/gsd-pause-work</code></td><td>-</td><td>Creates a handoff for safe pause.</td><td>No</td><td><code>.planning/phases/*/.continue-here.md</code>, <code>STATE.md</code></td></tr>
+              <tr><td><code>/gsd-resume-work</code></td><td>-</td><td>Restores context via resume workflow.</td><td>Orchestration via <code>workflows/resume-project.md</code></td><td>Continues from <code>STATE.md</code> and <code>.continue-here.md</code></td></tr>
+              <tr><td><code>/gsd-settings</code></td><td>-</td><td>Interactive setup for workflow and model profiles.</td><td><code>gsd-settings</code></td><td><code>.planning/config.json</code>, <code>opencode.json</code></td></tr>
+              <tr><td><code>/gsd-set-profile</code></td><td><code>&lt;quality|balanced|budget&gt;</code></td><td>Switches active model profile.</td><td><code>gsd-set-profile</code></td><td><code>.planning/config.json</code>, <code>opencode.json</code></td></tr>
+              <tr><td><code>/gsd-set-model</code></td><td>[profile]</td><td>Configures planning/execution/verification models for a profile.</td><td><code>gsd-set-model</code></td><td><code>.planning/config.json</code>, <code>opencode.json</code></td></tr>
+              <tr><td><code>/gsd-whats-new</code></td><td>-</td><td>Shows changes between installed and latest version.</td><td>No</td><td>Read-only VERSION/CHANGELOG</td></tr>
+              <tr><td><code>/gsd-update</code></td><td>-</td><td>Safely updates GSD with changelog preview.</td><td>No</td><td>Updates installed GSD files in OpenCode config</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="agents">4. All agents (role list)</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Agent</th>
+                <th>Role</th>
+                <th>Caller</th>
+                <th>Key output</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>Gsd-agent</code></td><td>Primary orchestrator of the full pipeline, command router, and next-command policy.</td><td>Main environment agent</td><td>Route + next command</td></tr>
+              <tr><td><code>gsd-codebase-mapper</code></td><td>Explores existing code by focus areas tech/arch/quality/concerns.</td><td><code>/gsd-map-codebase</code></td><td><code>.planning/codebase/*.md</code></td></tr>
+              <tr><td><code>gsd-project-researcher</code></td><td>Domain research before roadmap creation.</td><td><code>/gsd-new-project</code>, <code>/gsd-new-milestone</code></td><td><code>.planning/research/{STACK,FEATURES,ARCHITECTURE,PITFALLS}.md</code></td></tr>
+              <tr><td><code>gsd-research-synthesizer</code></td><td>Synthesizes research outputs into one summary and implications.</td><td><code>/gsd-new-project</code>, <code>/gsd-new-milestone</code></td><td><code>.planning/research/SUMMARY.md</code></td></tr>
+              <tr><td><code>gsd-roadmapper</code></td><td>Transforms requirements into a traceable roadmap.</td><td><code>/gsd-new-project</code>, <code>/gsd-new-milestone</code></td><td><code>.planning/ROADMAP.md</code>, updates <code>STATE/REQUIREMENTS</code></td></tr>
+              <tr><td><code>gsd-phase-researcher</code></td><td>Per-phase research before planning.</td><td><code>/gsd-plan-phase</code>, <code>/gsd-research-phase</code></td><td><code>*-RESEARCH.md</code></td></tr>
+              <tr><td><code>gsd-planner</code></td><td>Creates PLAN.md, waves/dependencies, and gap closure plans.</td><td><code>/gsd-plan-phase</code>, <code>/gsd-quick</code>, <code>/gsd-verify-work</code> (gap)</td><td><code>*-PLAN.md</code></td></tr>
+              <tr><td><code>gsd-plan-checker</code></td><td>Goal-backward validation that plans will actually achieve the goal.</td><td><code>/gsd-plan-phase</code>, gap loops</td><td>Status <code>VERIFICATION PASSED</code> or <code>ISSUES FOUND</code></td></tr>
+              <tr><td><code>gsd-executor</code></td><td>Executes plans with task commits, deviation rules, and checkpoints.</td><td><code>/gsd-execute-phase</code>, <code>/gsd-quick</code></td><td><code>*-SUMMARY.md</code>, code commits, <code>STATE.md</code> updates</td></tr>
+              <tr><td><code>gsd-verifier</code></td><td>Checks actual goal achievement in code for the phase.</td><td><code>/gsd-execute-phase</code></td><td><code>*-VERIFICATION.md</code></td></tr>
+              <tr><td><code>gsd-integration-checker</code></td><td>Cross-phase wiring and e2e integrity check for milestone.</td><td><code>/gsd-audit-milestone</code></td><td>Integration report for milestone audit</td></tr>
+              <tr><td><code>gsd-debugger</code></td><td>Scientific debugging with persistent debug session.</td><td><code>/gsd-debug</code>, diagnose flow</td><td><code>.planning/debug/*.md</code>, <code>resolved/</code></td></tr>
+              <tr><td><code>gsd-settings</code></td><td>Interactive menu for profile and workflow toggles.</td><td><code>/gsd-settings</code></td><td>Updates <code>.planning/config.json</code> and <code>opencode.json</code></td></tr>
+              <tr><td><code>gsd-set-profile</code></td><td>Switch active model profile.</td><td><code>/gsd-set-profile</code></td><td>Updated profile fields and agent models</td></tr>
+              <tr><td><code>gsd-set-model</code></td><td>Configure stage models in a specific profile.</td><td><code>/gsd-set-model</code></td><td>Updated model presets in config</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="gsd-agent-role">4.1 Detailed role of the main orchestrator <code>Gsd-agent</code></h3>
+        <p><code>Gsd-agent</code> is the central orchestrator that manages not a single answer, but a continuous delivery flow: <code>idea -&gt; context -&gt; plan -&gt; execute -&gt; verify -&gt; close</code>.</p>
+        <ul>
+          <li><strong>Pipeline dispatcher:</strong> selects the next valid <code>/gsd-*</code> command and keeps sequence integrity.</li>
+          <li><strong>Command-centric mode:</strong> explicit slash commands take priority over ad-hoc manual orchestration.</li>
+          <li><strong>Source of truth:</strong> relies on <code>.planning/STATE.md</code>, <code>.planning/ROADMAP.md</code>, <code>.planning/REQUIREMENTS.md</code> for routing and continuity.</li>
+          <li><strong>Continuation policy:</strong> if <code>Next command: /gsd-...</code> was issued, replies like "ok/continue/yes" must execute that pending command literally.</li>
+          <li><strong>Priority rules:</strong> user explicit command &gt; pending command &gt; generic autonomy.</li>
+          <li><strong>Quality control:</strong> does not allow skipping verify/gap-loop when gaps exist; routes to <code>/gsd-plan-phase --gaps</code> and <code>/gsd-execute-phase --gaps-only</code>.</li>
+          <li><strong>Autonomy boundaries:</strong> executes safe reversible actions autonomously, asks confirmation for irreversible/high-risk actions (prod/security/billing/secrets).</li>
+          <li><strong>Expected step output:</strong> after each stage, provides what was done, what was found, and one concrete next command.</li>
+        </ul>
+        <p><strong>Mini decision tree:</strong></p>
+        <pre><code>Step start
+  |
+  |-- Did user provide an explicit /gsd-* command?
+  |      |-- Yes -> Execute exactly that command
+  |      |-- No
+  |
+  |-- Is there a pending "Next command: /gsd-..." and user said "ok/continue/yes"?
+  |      |-- Yes -> Execute pending command literally
+  |      |-- No
+  |
+  |-- Does .planning/ exist?
+  |      |-- No -> /gsd-new-project (or /gsd-map-codebase -> /gsd-new-project)
+  |      |-- Yes
+  |
+  |-- Is current status clear from STATE/ROADMAP?
+  |      |-- No -> /gsd-progress
+  |      |-- Yes -> choose next pipeline stage:
+  |                discuss -> plan -> execute -> verify -> close
+  |
+  '-- If gaps found -> mandatory gap-loop:
+         /gsd-plan-phase N --gaps -> /gsd-execute-phase N --gaps-only</code></pre>
+        <p>Practical outcome: the user always knows where they are in the process, what is already done, and what exact command comes next without manual stitching.</p>
+
+        <h2 id="auto-chains">5. Automatic chains (command -> orchestration -> subagents -> artifacts)</h2>
+        <ol>
+          <li><strong><code>/gsd-new-project</code>:</strong> preflight and questioning -> optional research (4 x <code>gsd-project-researcher</code>) -> <code>gsd-research-synthesizer</code> -> requirements -> <code>gsd-roadmapper</code> -> <code>PROJECT/REQUIREMENTS/ROADMAP/STATE/config</code>.</li>
+          <li><strong><code>/gsd-plan-phase N</code>:</strong> phase and mode selection -> optional <code>gsd-phase-researcher</code> -> <code>gsd-planner</code> -> <code>gsd-plan-checker</code> -> up to 3 planner/checker revisions -> <code>*-PLAN.md</code>.</li>
+          <li><strong><code>/gsd-execute-phase N</code>:</strong> read all plan files -> group by wave -> parallel <code>gsd-executor</code> workers per wave -> collect summaries -> <code>gsd-verifier</code> -> <code>*-SUMMARY.md</code> + <code>*-VERIFICATION.md</code> + roadmap/state updates.</li>
+          <li><strong><code>/gsd-verify-work N</code>:</strong> conversational UAT by deliverables -> write <code>*-UAT.md</code> -> if issues: diagnose + gap planning via <code>gsd-planner</code> and <code>gsd-plan-checker</code> -> prepare <code>/gsd-execute-phase N --gaps-only</code>.</li>
+          <li><strong><code>/gsd-audit-milestone</code>:</strong> aggregate milestone verification/summaries -> run <code>gsd-integration-checker</code> -> final <code>MILESTONE-AUDIT.md</code> -> route to completion or gap-closure.</li>
+          <li><strong><code>/gsd-quick</code>:</strong> small task intake -> <code>gsd-planner</code> (quick mode) -> <code>gsd-executor</code> -> separate quick artifacts + state update.</li>
+        </ol>
+
+        <h3 id="cycles-ralf">5.1 Built-in loops and how RALF Lite is used</h3>
+        <p><strong>What counts as built-in loops in the system:</strong></p>
+        <ul>
+          <li><strong>Planner -> Checker loop (up to 3 iterations):</strong> after <code>gsd-planner</code>, <code>gsd-plan-checker</code> runs; if <code>ISSUES FOUND</code>, plan is revised, up to 3 rounds.</li>
+          <li><strong>Phase gap-loop:</strong> if gaps exist, mandatory pair <code>/gsd-plan-phase N --gaps</code> -> <code>/gsd-execute-phase N --gaps-only</code> until acceptable result.</li>
+          <li><strong>Post-execution verify-loop:</strong> after gap plan re-execution, phase verification runs again until passed.</li>
+          <li><strong>Wave-loop in execute-phase:</strong> plans run in waves; retries inside a wave target only failed autonomous plans.</li>
+          <li><strong>Checkpoint continuation loop:</strong> at <code>checkpoint:*</code>, agent stops, orchestrator collects user decision, then spawns a fresh continuation agent.</li>
+          <li><strong>UAT -> diagnosis -> fix planning loop:</strong> UAT issues are diagnosed, then fix/gap plans are generated and re-executed.</li>
+          <li><strong>Debug investigation loop:</strong> <code>gsd-debugger</code> follows evidence -> hypothesis -> test -> evaluate.</li>
+          <li><strong>Settings menu loop:</strong> <code>gsd-settings</code> menu repeats until explicit exit.</li>
+        </ul>
+
+        <p><strong>How RALF Lite is used:</strong></p>
+        <ul>
+          <li><strong>Purpose:</strong> bounded retry-and-repair loop only where outcomes are objectively verifiable.</li>
+          <li><strong>Where it applies:</strong> in <code>execute-plan</code> for <code>type="auto"</code> tasks, and in <code>execute-phase</code> for <code>autonomous: true</code> plans.</li>
+          <li><strong>Where it does not apply:</strong> it does not bypass <code>checkpoint:*</code> and does not replace architecture decisions requiring human choice.</li>
+          <li><strong>Stop conditions:</strong> success, reaching <code>max_iterations</code>, repeated error fingerprint, no progress.</li>
+          <li><strong>Reporting:</strong> final summaries should include <code>RALF Lite Loop Report</code> with attempts and stop reason.</li>
+          <li><strong>How to disable globally:</strong> edit <code>${OPENCODE_CONFIG_DIR:-~/.config/opencode}/get-shit-done/config.json</code> and set <code>ralf_lite.enabled: false</code> (or disable only <code>apply_to.auto_tasks/autonomous_plans</code>).</li>
+          <li><strong>How to override per project:</strong> add <code>ralf_lite</code> section in <code>.planning/config.json</code> with needed fields (<code>enabled</code>, <code>max_iterations</code>, <code>error_fingerprint_repeats</code>, <code>no_progress_repeats</code>, <code>apply_to.*</code>).</li>
+          <li><strong>Important config note:</strong> <code>/gsd-settings</code> does not edit RALF Lite defaults; edit global config or project override manually.</li>
+        </ul>
+
+        <h2 id="pipelines">6. Full development pipeline variants</h2>
+        <h3>6.1 Greenfield (new project)</h3>
+        <pre><code>/gsd-new-project
+/gsd-discuss-phase 1
+/gsd-plan-phase 1
+/gsd-execute-phase 1
+/gsd-verify-work 1
+# if gaps exist
+/gsd-plan-phase 1 --gaps
+/gsd-execute-phase 1 --gaps-only
+# then next phase or milestone audit</code></pre>
+
+        <h3>6.2 Brownfield (existing code)</h3>
+        <pre><code>/gsd-map-codebase
+/gsd-new-project
+/gsd-progress
+/gsd-discuss-phase 1
+/gsd-plan-phase 1</code></pre>
+
+        <h3>6.3 Phase cycle from context to acceptance</h3>
+        <pre><code>/gsd-discuss-phase N
+/gsd-research-phase N     # optional
+/gsd-plan-phase N
+/gsd-execute-phase N
+/gsd-verify-work N</code></pre>
+
+        <h3>6.4 Gap-closure cycle (when goal is not yet achieved)</h3>
+        <pre><code>/gsd-plan-phase N --gaps
+/gsd-execute-phase N --gaps-only
+/gsd-verify-work N         # or /gsd-audit-milestone at milestone end</code></pre>
+
+        <h3>6.5 Milestone close cycle</h3>
+        <pre><code>/gsd-audit-milestone [version]
+/gsd-plan-milestone-gaps   # if audit found gaps
+/gsd-complete-milestone X.Y.Z
+/gsd-new-milestone "Next scope"</code></pre>
+
+        <h3>6.6 Incident/debug cycle</h3>
+        <pre><code>/gsd-debug "issue symptom"
+# if needed after /new
+/gsd-debug
+# then fix via quick or phase pipeline</code></pre>
+
+        <h2 id="user-vs-auto">7. What the user triggers vs what runs automatically</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>What exactly</th>
+                <th>Initiator</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Explicit commands</td><td><code>/gsd-*</code> (new-project, plan-phase, execute-phase, verify-work, etc.)</td><td>User</td></tr>
+              <tr><td>Planning subagents</td><td><code>gsd-phase-researcher</code>, <code>gsd-planner</code>, <code>gsd-plan-checker</code></td><td>Command orchestrator (<code>/gsd-plan-phase</code>)</td></tr>
+              <tr><td>Execution subagents</td><td><code>gsd-executor</code>, <code>gsd-verifier</code></td><td><code>/gsd-execute-phase</code></td></tr>
+              <tr><td>Initialization subagents</td><td><code>gsd-project-researcher</code> x4, <code>gsd-research-synthesizer</code>, <code>gsd-roadmapper</code></td><td><code>/gsd-new-project</code>, <code>/gsd-new-milestone</code></td></tr>
+              <tr><td>Audit subagent</td><td><code>gsd-integration-checker</code></td><td><code>/gsd-audit-milestone</code></td></tr>
+              <tr><td>Debug subagent</td><td><code>gsd-debugger</code></td><td><code>/gsd-debug</code> (and diagnose path in verify)</td></tr>
+              <tr><td>Model settings</td><td><code>gsd-settings</code>, <code>gsd-set-profile</code>, <code>gsd-set-model</code></td><td>Commands <code>/gsd-settings</code>, <code>/gsd-set-profile</code>, <code>/gsd-set-model</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="artifacts">8. Key artifacts and who creates them</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Artifact</th>
+                <th>Who creates/updates</th>
+                <th>Role in pipeline</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>.planning/PROJECT.md</code></td><td><code>/gsd-new-project</code>, <code>/gsd-new-milestone</code></td><td>Project/milestone vision and boundaries</td></tr>
+              <tr><td><code>.planning/REQUIREMENTS.md</code></td><td><code>/gsd-new-project</code>, <code>/gsd-new-milestone</code>, <code>/gsd-execute-phase</code> (updates)</td><td>Requirements and phase traceability</td></tr>
+              <tr><td><code>.planning/ROADMAP.md</code></td><td><code>gsd-roadmapper</code>, roadmap commands, execute/complete flows</td><td>Phase plan and milestone status</td></tr>
+              <tr><td><code>.planning/STATE.md</code></td><td>Most orchestrators, especially execute/pause/progress</td><td>Project memory and session continuity</td></tr>
+              <tr><td><code>.planning/config.json</code></td><td><code>/gsd-new-project</code>, <code>/gsd-settings</code>, <code>/gsd-set-profile</code>, <code>/gsd-set-model</code></td><td>Workflow toggles, profiles, RALF overrides</td></tr>
+              <tr><td><code>.planning/codebase/*.md</code></td><td><code>/gsd-map-codebase</code> + <code>gsd-codebase-mapper</code></td><td>Map of existing code</td></tr>
+              <tr><td><code>.planning/research/*.md</code></td><td><code>gsd-project-researcher</code>, <code>gsd-research-synthesizer</code></td><td>Research base before roadmap</td></tr>
+              <tr><td><code>.planning/phases/*/*-CONTEXT.md</code></td><td><code>/gsd-discuss-phase</code></td><td>Captured phase decisions</td></tr>
+              <tr><td><code>.planning/phases/*/*-RESEARCH.md</code></td><td><code>gsd-phase-researcher</code></td><td>Technical options and risks of phase</td></tr>
+              <tr><td><code>.planning/phases/*/*-PLAN.md</code></td><td><code>gsd-planner</code></td><td>Executable plans (including waves/depends)</td></tr>
+              <tr><td><code>.planning/phases/*/*-SUMMARY.md</code></td><td><code>gsd-executor</code></td><td>Actual execution outcomes and deviations</td></tr>
+              <tr><td><code>.planning/phases/*/*-VERIFICATION.md</code></td><td><code>gsd-verifier</code></td><td>Goal-backward goal achievement check</td></tr>
+              <tr><td><code>.planning/phases/*/*-UAT.md</code></td><td><code>/gsd-verify-work</code></td><td>Conversational acceptance result</td></tr>
+              <tr><td><code>.planning/v*-MILESTONE-AUDIT.md</code></td><td><code>/gsd-audit-milestone</code> + <code>gsd-integration-checker</code></td><td>Decision point: close milestone or create gap phases</td></tr>
+              <tr><td><code>.planning/quick/*</code></td><td><code>/gsd-quick</code></td><td>Separate track for fast tasks</td></tr>
+              <tr><td><code>.planning/debug/*</code></td><td><code>/gsd-debug</code> + <code>gsd-debugger</code></td><td>Persistent debug sessions and resolved archive</td></tr>
+              <tr><td><code>.planning/todos/pending|done</code></td><td><code>/gsd-add-todo</code>, <code>/gsd-check-todos</code></td><td>Idea/task backlog management</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="edge-cases">9. Nuances, rules, and edge cases</h2>
+        <h3>9.1 Critical quality protocols</h3>
+        <ul>
+          <li><strong>Plan quality loop:</strong> after <code>gsd-planner</code>, <code>gsd-plan-checker</code> runs; if issues remain, up to 3 revision rounds.</li>
+          <li><strong>Goal-backward verify:</strong> <code>gsd-verifier</code> validates actual code delivery, not just report claims.</li>
+          <li><strong>RALF Lite:</strong> bounded auto-retry loops (usually up to 3) that stop on repeated fingerprint or no progress.</li>
+          <li><strong>Checkpoints:</strong> <code>human-verify</code>, <code>decision</code>, <code>human-action</code> from <code>references/checkpoints.md</code>.</li>
+          <li><strong>Gap loop is mandatory:</strong> gaps from verify/UAT/audit are never ignored; they are closed via <code>--gaps</code> and/or milestone gap phases.</li>
+        </ul>
+
+        <h3>9.2 Git and planning document behavior</h3>
+        <ul>
+          <li>Behavior is controlled by <code>planning.commit_docs</code> and <code>planning.search_gitignored</code> (see <code>references/planning-config.md</code>).</li>
+          <li>With <code>commit_docs=false</code>, planning artifacts can stay local and be excluded through <code>.gitignore</code>.</li>
+          <li>Executor commits are atomic; broad staging such as <code>git add .</code> inside task commits is prohibited.</li>
+        </ul>
+
+        <h3>9.3 Detected inconsistencies across files</h3>
+        <ul>
+          <li><strong>Milestone audit path:</strong> <code>commands/gsd/audit-milestone.md</code> contains <code>.planning/v{version}-v{version}-MILESTONE-AUDIT.md</code>, but other files use <code>.planning/v{version}-MILESTONE-AUDIT.md</code> (including <code>commands/gsd/plan-milestone-gaps.md</code>, <code>commands/gsd/complete-milestone.md</code>).</li>
+          <li><strong>Trigger docs vs actual calls:</strong> <code>agents/gsd-roadmapper.md</code> and <code>agents/gsd-research-synthesizer.md</code> document only <code>/gsd-new-project</code>, but they are also invoked in <code>commands/gsd/new-milestone.md</code>.</li>
+          <li><strong>Completion route:</strong> <code>commands/gsd/progress.md</code> may suggest <code>/gsd-complete-milestone</code> without version, while <code>commands/gsd/complete-milestone.md</code> requires mandatory <code>&lt;version&gt;</code>.</li>
+          <li><strong>Agent count in mapping:</strong> <code>agents/gsd-set-profile.md</code> and <code>agents/gsd-set-model.md</code> mention "11 agents", but the mapped list is larger.</li>
+        </ul>
+
+        <h2 id="sources">10. Sources (where to verify facts)</h2>
+        <ul>
+          <li><code>commands/gsd/help.md</code></li>
+          <li><code>commands/gsd/new-project.md</code></li>
+          <li><code>commands/gsd/new-milestone.md</code></li>
+          <li><code>commands/gsd/plan-phase.md</code></li>
+          <li><code>commands/gsd/execute-phase.md</code></li>
+          <li><code>commands/gsd/verify-work.md</code></li>
+          <li><code>commands/gsd/audit-milestone.md</code></li>
+          <li><code>commands/gsd/plan-milestone-gaps.md</code></li>
+          <li><code>commands/gsd/complete-milestone.md</code></li>
+          <li><code>commands/gsd/debug.md</code></li>
+          <li><code>agents/Gsd-agent.md</code></li>
+          <li><code>agents/gsd-planner.md</code></li>
+          <li><code>agents/gsd-executor.md</code></li>
+          <li><code>agents/gsd-verifier.md</code></li>
+          <li><code>agents/gsd-plan-checker.md</code></li>
+          <li><code>agents/gsd-phase-researcher.md</code></li>
+          <li><code>agents/gsd-project-researcher.md</code></li>
+          <li><code>agents/gsd-research-synthesizer.md</code></li>
+          <li><code>agents/gsd-roadmapper.md</code></li>
+          <li><code>agents/gsd-debugger.md</code></li>
+          <li><code>agents/gsd-codebase-mapper.md</code></li>
+          <li><code>agents/gsd-integration-checker.md</code></li>
+          <li><code>agents/gsd-settings.md</code></li>
+          <li><code>agents/gsd-set-profile.md</code></li>
+          <li><code>agents/gsd-set-model.md</code></li>
+          <li><code>get-shit-done/workflows/execute-phase.md</code></li>
+          <li><code>get-shit-done/workflows/execute-plan.md</code></li>
+          <li><code>get-shit-done/workflows/verify-work.md</code></li>
+          <li><code>get-shit-done/workflows/verify-phase.md</code></li>
+          <li><code>get-shit-done/workflows/complete-milestone.md</code></li>
+          <li><code>get-shit-done/workflows/diagnose-issues.md</code></li>
+          <li><code>get-shit-done/workflows/resume-project.md</code></li>
+          <li><code>get-shit-done/references/checkpoints.md</code></li>
+          <li><code>get-shit-done/references/ralf-lite.md</code></li>
+          <li><code>get-shit-done/references/planning-config.md</code></li>
+          <li><code>get-shit-done/references/model-profiles.md</code></li>
+          <li><code>get-shit-done/references/git-integration.md</code></li>
+        </ul>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var btn = document.getElementById("menu-btn");
+      if (!btn) return;
+      btn.addEventListener("click", function () {
+        document.body.classList.toggle("menu-open");
+      });
+      document.addEventListener("click", function (e) {
+        if (window.innerWidth > 980) return;
+        var sidebar = document.getElementById("sidebar");
+        if (!sidebar) return;
+        if (sidebar.contains(e.target) || btn.contains(e.target)) return;
+        document.body.classList.remove("menu-open");
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+{
+  "name": "gsd-agent-opencode",
+  "version": "0.1.0",
+  "description": "GSD Agent system for OpenCode: установка и управление (global/local) + набор команд/агентов.",
+  "keywords": [
+    "opencode",
+    "gsd-agent",
+    "meta-prompting",
+    "context-engineering",
+    "spec-driven-development"
+  ],
+  "homepage": "https://github.com/ai4bordon/gsd-agent-opencode#readme",
+  "bugs": {
+    "url": "https://github.com/ai4bordon/gsd-agent-opencode/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ai4bordon/gsd-agent-opencode.git"
+  },
+  "license": "MIT",
+  "author": "GSD Agent contributors",
+  "type": "module",
+  "main": "bin/gsd.js",
+  "bin": {
+    "gsd-agent-opencode": "bin/gsd.js",
+    "gsd-agent-install": "bin/gsd-install.js"
+  },
+  "files": [
+    "agents",
+    "bin",
+    "commands",
+    "get-shit-done",
+    "src",
+    "lib"
+  ],
+  "scripts": {
+    "test": "node -e \"console.log('no tests yet')\""
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^8.2.0",
+    "chalk": "^5.6.2",
+    "commander": "^12.1.0",
+    "ora": "^9.3.0"
+  }
+}
