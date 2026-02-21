@@ -2,6 +2,16 @@
 
 [README in Russian](README_RU.md)
 
+## Project Lineage and Thanks
+
+This project is based on:
+- **Get Shit Done (GSD)** by TACHES: https://github.com/glittercowboy/get-shit-done
+- **OpenCode adaptation (`gsd-opencode`)** by Roman and contributors: https://github.com/rokicool/gsd-opencode
+
+In this context, we express sincere gratitude:
+- to the author of GSD for a truly practical and effective agentic delivery system;
+- to the author and contributors of `gsd-opencode` for adapting the system to the excellent OpenCode ecosystem.
+
 `gsd-agent-opencode` is a professional OpenCode-first agentic development system with `command-first` discipline: from idea to validation through a repeatable `context -> plan -> execute -> verify` pipeline.
 
 This project provides:
@@ -14,7 +24,7 @@ This project provides:
 
 **Get Shit Done (GSD)** is the original agent system by TACHES https://github.com/glittercowboy/get-shit-done for context engineering and spec-driven development: not "just chatting with AI," but a managed production loop from idea to validated result.
 
-In the framing of the upstream repository `glittercowboy/get-shit-done`, GSD addresses a key long-session AI problem: **`context rot`** (as context grows, solution quality and execution precision degrade).
+GSD addresses a key long-session AI problem: **`context rot`** (as context grows, solution quality and execution precision degrade).
 
 ### What GSD provides in practice
 
@@ -91,19 +101,7 @@ Original GSD repository: https://github.com/glittercowboy/get-shit-done
   </tbody>
 </table>
 
-### What adding `Gsd-agent` (primary orchestrator) solves
-
-`agents/Gsd-agent.md` adds a dispatch layer that addresses common long AI-session failures:
-
-- **Problem:** after several steps, the assistant drifts into discussion instead of executing the next command.  
-  **Solution:** pending-command policy + literal continuation (`ok/continue/let's go` runs the last `Next command`).
-- **Problem:** the assistant replaces an explicit user command with a "more logical" one in its own view.  
-  **Solution:** strict rule priority: explicit command > pending command > general autonomy.
-- **Problem:** the primary agent starts changing the repository directly, reducing stage traceability.  
-  **Solution:** primary acts as router/dispatcher; repo-changing actions must go through `/gsd-*` pipeline and specialized subagents.
-- **Problem:** gaps after verify/UAT can be skipped.  
-  **Solution:** mandatory gap-loop route (`/gsd-plan-phase --gaps` -> `/gsd-execute-phase --gaps-only`).
-
+ы
 Compared to the upstream system, this version makes OpenCode behavior more deterministic and operationally robust specifically for iterative "drive project to done" workflows.
 
 ## What's inside
@@ -256,18 +254,13 @@ Useful:
 
 ## Documentation
 
-- Full guide (RU): `docs/GSD_AgentSystemGuide.html`
-- Full guide (EN): `docs/GSD_AgentSystemGuide_EN.html`
-- Primary orchestrator: `agents/Gsd-agent.md`
-- RALF Lite: `get-shit-done/references/ralf-lite.md`
-- Checkpoints: `get-shit-done/references/checkpoints.md`
-- Planning config: `get-shit-done/references/planning-config.md`
+- Full guide (RU): [docs/GSD_AgentSystemGuide.html](docs/GSD_AgentSystemGuide.html)
+- Full guide (EN): [docs/GSD_AgentSystemGuide_EN.html](docs/GSD_AgentSystemGuide_EN.html)
 
 ## Acknowledgements
 
 - Upstream **Get Shit Done** system: https://github.com/glittercowboy/get-shit-done
 - OpenCode adaptation this project builds on: https://github.com/rokicool/gsd-opencode
-- Thanks to all contributors advancing command-first agent development practices.
 
 ## License
 
